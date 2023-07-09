@@ -1,3 +1,6 @@
+"use client"
+
+import DatePicker from "@/components/DatePicker";
 import Input from "@/components/Input";
 
 export function TripSearch() {
@@ -11,7 +14,7 @@ export function TripSearch() {
         <Input placeholder="Onde você quer ir?" />
 
         <div className="flex gap-4">
-          <Input placeholder="Data de ida" />
+          <DatePicker placeholderText="Data de ida" onChange={() => {}} />
           <Input placeholder="Orçamento" />
         </div>
       </div>
