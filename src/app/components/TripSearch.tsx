@@ -7,7 +7,7 @@ import Input from "@/components/Input";
 
 export function TripSearch() {
   return (
-    <div className="cotainer mx-auto p-5">
+    <div className="cotainer mx-auto p-5 bg-search-background bg-cover bg-no-repeat">
       <h1 className="font-semibold text-2xl text-primaryDarker text-center">
         Encontre sua próxima <span className="text-primary">viagem!</span>
       </h1>
