@@ -7,7 +7,7 @@ import Input from "@/components/Input";
 
 export function TripSearch() {
   return (
-    <div className="cotainer mx-auto p-5 bg-search-background bg-cover bg-no-repeat">
+    <div className="container mx-auto p-5 bg-search-background bg-cover bg-no-repeat">
       <h1 className="font-semibold text-2xl text-primaryDarker text-center">
         Encontre sua próxima <span className="text-primary">viagem!</span>
       </h1>
@@ -17,10 +17,10 @@ export function TripSearch() {
 
         <div className="flex gap-4">
           <DatePicker className="w-full" placeholderText="Data de ida" onChange={() => {}} />
-          <CurrencyInput placeholder="Orçamento" />
+          <CurrencyInput className="w-full" placeholder="Orçamento" />
         </div>
 
-        <Button>Buscar</Button>
+        <Button>Pesquisar</Button>
       </div>
     </div>
   )
