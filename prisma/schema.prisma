@@ -19,10 +19,12 @@ model Trip {
   pricePerDay Decimal           @db.Decimal(8, 2)
   description String
   coverImage  String
-  imageUrl    String[]
+  imagesUrl   String[]
   highlights  String[]
   maxGuests   Int
   reservation TripReservation[]
+  countryCode String
+  recommended Boolean           @default(false)
 }
 
 model TripReservation {
