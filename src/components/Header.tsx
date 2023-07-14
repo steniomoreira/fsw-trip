@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { AiOutlineMenu } from "react-icons/ai";
 import { signIn, signOut, useSession} from "next-auth/react";
+import Link from "next/link";
 
 export function Header() {
   const { status, data } = useSession();
@@ -23,7 +24,9 @@ export function Header() {
 
   return (
     <div className="container mx-auto h-[72px] px-5 flex justify-between items-center">
-      <Image src='/logo.svg' width={183} height={32} alt="Full Stack Week" />
+      <Link href='/'>
+        <Image src='/logo.svg' width={183} height={32} alt="Full Stack Week" />
+      </Link>
       
       {!isAuthenticated && (
         <button
