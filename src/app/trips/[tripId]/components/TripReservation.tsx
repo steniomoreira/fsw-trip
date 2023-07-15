@@ -45,26 +45,26 @@ export function TripReservation({ tripId, tripStartDate, tripEndData, maxGuests,
     if ( res?.error?.code === 'TRIP_ALREADY_RESERVED'){
       setError('startDate', {
         type: 'manual',
-        message: 'Esta data já está reservada.'
+        message: 'Esta data já está reservada'
       });
 
-      setError('endDate', {
+      return setError('endDate', {
         type: 'manual',
-        message: 'Esta data já está reservada.'
+        message: 'Esta data já está reservada'
       });
     }
 
     if ( res?.error?.code === 'INVALID_START_DATE'){
       setError('startDate', {
         type: 'manual',
-        message: 'Data inválida.'
+        message: 'Data inválida'
       });
     } 
 
     if ( res?.error?.code === 'INVALID_END_DATE'){
-      setError('endDate', {
+      return setError('endDate', {
         type: 'manual',
-        message: 'Data inválida.'
+        message: 'Data inválida'
       });
     }  
   }
@@ -121,6 +121,10 @@ export function TripReservation({ tripId, tripStartDate, tripEndData, maxGuests,
         placeholder={`Número de hóspedes (max: ${maxGuests})`} 
         {...register('guests', {
           required: 'Número de hóspedes é obrigatório',
+          max: {
+            value: maxGuests,
+            message: `Máximo de ${maxGuests} hóspedes`
+          }
         })}
         error={!!errors.guests}
         errorMessage={errors.guests?.message}
