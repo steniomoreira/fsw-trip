@@ -5,6 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import DatePicker from "@/components/DatePicker";
 import Input from "@/components/Input";
 import { add, differenceInDays } from "date-fns";
+import { useRouter } from "next/navigation";
 
 interface TripReservationProps {
   tripId: string,
@@ -21,6 +22,8 @@ interface TripReservationForm {
 }
 
 export function TripReservation({ tripId, tripStartDate, tripEndData, maxGuests, pricePerDay }: TripReservationProps) {  
+  const router = useRouter()
+
   const {register, handleSubmit, control, watch, setError, formState: {
     errors
   }} = useForm<TripReservationForm>();
@@ -29,12 +32,14 @@ export function TripReservation({ tripId, tripStartDate, tripEndData, maxGuests,
   const endDate = watch('endDate');
 
   async function onSubmit(data: TripReservationForm) {
+    const { startDate, endDate, guests } = data;
+
     const response = await fetch('http://localhost:3000/api/trips/check', {
       method: 'POST',
       body: Buffer.from(JSON.stringify(
         {
-          startDate: data.startDate,
-          endDate: data.endDate,
+          startDate,
+          endDate,
           tripId,
         }
       ))
@@ -43,7 +48,7 @@ export function TripReservation({ tripId, tripStartDate, tripEndData, maxGuests,
     const res = await response.json()
     
     if ( res?.error?.code === 'TRIP_ALREADY_RESERVED'){
-      setError('startDate', {
+        setError('startDate', {
         type: 'manual',
         message: 'Esta data já está reservada'
       });
@@ -55,7 +60,7 @@ export function TripReservation({ tripId, tripStartDate, tripEndData, maxGuests,
     }
 
     if ( res?.error?.code === 'INVALID_START_DATE'){
-      setError('startDate', {
+      return setError('startDate', {
         type: 'manual',
         message: 'Data inválida'
       });
@@ -66,7 +71,11 @@ export function TripReservation({ tripId, tripStartDate, tripEndData, maxGuests,
         type: 'manual',
         message: 'Data inválida'
       });
-    }  
+    }
+
+    router.push(`
+      /trips/${tripId}/confirmation?startDate=${startDate?.toISOString()}&endDate=${endDate?.toISOString()}&guests=${guests}
+    `)
   }
 
   return (
