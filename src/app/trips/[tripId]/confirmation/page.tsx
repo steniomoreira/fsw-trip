@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react"
 import ReactCountryFlag from "react-country-flag";
+import { toast } from "react-toastify";
 
 
 export default function TripConfirmation({ params }: { params: { tripId: string } }) {
@@ -53,7 +54,7 @@ export default function TripConfirmation({ params }: { params: { tripId: string 
   if(!trip) return null;
 
   const handleBuyClick = async () => {
-    const res = await fetch("/api/payment", {
+    const res = await fetch("http://localhost:3000/api/trips/reservation", {
       method: "POST",
       body: Buffer.from(
         JSON.stringify({
@@ -61,14 +62,20 @@ export default function TripConfirmation({ params }: { params: { tripId: string 
           startDate: searchParams.get("startDate"),
           endDate: searchParams.get("endDate"),
           guests: Number(searchParams.get("guests")),
-          totalPrice,
-          coverImage: trip.coverImage,
-          name: trip.name,
-          description: trip.description,
+          userId: (data?.user as any)?.id,
+          totalPaid: totalPrice,   
         })
       ),
     });
-  }
+
+    if (!res.ok) {
+      return toast.error("Ocorreu um erro ao realizar a reserva!", { position: "bottom-center" });
+    }
+
+    router.push('/');
+
+    toast.success("Reserva realizada com sucesso!", { position: "bottom-center" });
+  }  
 
   const startDate = new Date(searchParams.get("startDate") as string);
   const endDate = new Date(searchParams.get("endDate") as string);
