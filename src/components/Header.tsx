@@ -49,13 +49,22 @@ export function Header() {
             <Image className="rounded-full" src={imageUser} width={24} height={24} alt="Stenio Moreira" />
           </button>
 
-          {isOpenMenu && (            
-            <button
-              className="absolute top-9 right-0 flex justify-center items-center w-[65px] py-2 shadow-md rounded-xl text-primary text-xs font-semibold"
+          {isOpenMenu && (  
+            <div className="absolute top-9 right-0 flex flex-col justify-center items-center gap-2 w-[130px] h-auto p-4 shadow-md rounded-xl bg-white">         
+              <Link href='/my-trips'>
+                <button
+                  className=" text-primary text-xs font-semibold py-2">
+                  Minhas viagens
+                </button>
+              </Link>
+
+              <button
+              className="text-primary text-xs font-semibold py-2"
               onClick={handleLogout}
               >
               Logout
-            </button>
+              </button>
+            </div> 
           )}
         </div>
       )}
